@@ -170,6 +170,43 @@ function setupCanvas_TW(barChartData,TW_deathsClean,width,height){
 
     yAxisDraw.selectAll('text').attr('dx','-0.6em');
     update(barChartData);
+
+    const tip = d3.select('.tooltip');
+
+    function mouseover(e){
+        const thisBarData = d3.select(this).data()[0];
+        const bodyData = [
+            ['death toll:', formatTicks(thisBarData.death_cause_num)]
+        ]
+
+
+        tip.style('left', (e.clientX+15)+'px')
+            .style('top', e.clientY+'px')
+            .transition() //切換bar會較溫和, 可再調整transition預設值
+            .style('opacity', 0.98);
+
+        tip.select('h3').html(`${thisBarData.death_cause}`);
+        // tip.select('h4').html(`death toll: ${thisBarData.death_cause_num}`);
+
+        d3.select('.tip-body').selectAll('p').data(bodyData)
+        .join('p').attr('class','tip-info').html(d => `${d[0]} : ${d[1]}`);
+    }
+
+    function mousemove(e) {
+        tip.style('left', (e.clientX+15) + 'px')
+            .style('top', e.clientY + 'px');
+
+    }
+
+    function mouseout(e) {
+        tip.transition()
+        .style('opacity', 0);
+    }
+
+    d3.selectAll('.bar')
+        .on('mouseover', mouseover)
+        .on('mousemove', mousemove)
+        .on('mouseout', mouseout);
 }
 
 
@@ -244,6 +281,6 @@ function chooseData(metric, deaths){
             return d3.descending(a.death_cause_num,b.death_cause_num);      // a,b 排序為大至小， a,b 相反為小至大
         }
         
-    );
+    ).filter((d,i)=>i<15);
     return barChartData;
 }

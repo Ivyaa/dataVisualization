@@ -11786,6 +11786,44 @@ section#contact form#contactForm :-ms-input-placeholder {
   stroke: rgb(255, 255, 255);
 }
 
+.tooltip{
+  position: fixed;
+  opacity: 0;
+  pointer-events: none; 
+  /* 避免出現連結或其他預設行為 */
+  background: #fff1db;
+  max-width: 400px;
+}
+
+.tip-header{
+  border-bottom: 2px solid white;
+  padding: 0.9rem 1rem;
+}
+
+.tip-body{
+  padding: 0.2rem 0;
+}
+
+h3, h4{
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0
+}
+
+h4{
+  font-weight: normal;
+}
+
+.tip-info{
+  margin: 0;
+  padding: 0.3rem 1rem;
+  font-size: 0.8rem;
+}
+
+.tip-info:nth-of-type(even){
+  background: #0e0e0e;
+}
+
 button{
   outline:none;
   color:white;
