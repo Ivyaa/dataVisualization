@@ -51,6 +51,9 @@ function formatTicks(d){
 }
 
 
+
+
+
 /*
  *  找台灣各年死因排行
  */
@@ -78,12 +81,6 @@ function setupCanvas_TW(barChartData,TW_deathsClean,width,height){
         const thisData=chooseData(metric, TW_deathsClean);
         console.log(thisData);
         update(thisData);
-        thisData.shift();
-        thisData.pop();
-        thisData.pop();
-        thisData.pop();
-        thisData.pop();
-        update2(thisData);
     }
     d3.selectAll('button').on('click',click);
 
@@ -131,91 +128,6 @@ function setupCanvas_TW(barChartData,TW_deathsClean,width,height){
                 .remove();
             }
         );
-        d3.selectAll('.bar')
-        .on('mouseover', mouseover)
-        .on('mousemove', mousemove)
-        .on('mouseout', mouseout);
-    }
-
-    function update2(TW_data){
-
-        //做出顏色比例尺
-        const color = d3.scaleOrdinal().domain(TW_data)
-        .range(['#f28424','#f7a54d','#f7b94d','#f7ca4d','#fce468']);
-
-        //原餅圖的半徑
-        const radius = 200;
-
-        // Animation
-        //先清空
-        d3.select('#graph2-svg').remove();
-        
-        //svg起手式
-        const svg = d3.select('.graph2')
-        .append('svg')
-        .attr('width',600)
-        .attr('height',600)
-        .attr('id','graph2-svg')
-        .append("g")
-        .attr("transform", "translate(" + 600 / 2 + "," + 600 / 2 + ")");
-        
-        // 做餅啦
-        var pie = d3.pie().value(function(d) {return d.death_cause_num});
-        
-        // 畫圓餅圖製造機，幫每一個data做出扇形
-        var arcGenerator = 
-            d3.arc()
-            .innerRadius(0) //這邊如果有數值的話變成甜甜圈形狀的
-            .outerRadius(radius)
-        
-        // 把data塞進去
-        var arc = svg.selectAll('arc').data(pie(TW_data)).enter()
-
-        arc.append('path').attr('d',arcGenerator)
-            .attr('fill', function(d, i){
-                return color(d.data)
-            }).transition()  //動畫起手式！
-            .duration(3000)
-            .attrTween("d", function(d) {
-                //data裡面 有startAngle ＆ endAngle
-                var d3Interpolate = d3.interpolate({startAngle: 0, endAngle: 0}, d);
-                return function(t) {
-                // t就是時間間隔回傳0-1中間的數值
-                //d3Interpolate(t) =>各個data在t時間的角度
-                    return arcGenerator(d3Interpolate(t));
-                };
-            })
-        
-        var label = d3.arc()
-                      .outerRadius(radius*1.5) //讓他在圓的更外面
-                      .innerRadius(radius);
-        
-        arc.append("text")
-        .text(function(d) { return d.data.death_cause; })
-        .style("font-family", "arial")
-        .style("font-size", 12)
-        .style("fill", "transparent")
-        .attr("text-anchor", "middle")
-        .transition()
-        .delay(2000)//讓他晚一點出現
-        .duration(1000)
-        .style("fill", "black")
-        .attr("transform", function(d) { 
-            return "translate(" + label.centroid(d) + ")"; 
-            })
-          
-          // Label標籤的線。polyline
-        arc.append("polyline")
-        .attr("stroke", "black")
-        .attr("stroke-width", 0.75)
-        .attr("fill", "transparent")
-        .transition()
-        .delay(3000) //讓他晚一點出現
-        .duration(1000)
-        .attr("points",function(d){
-            var outer = label.centroid(d).map((i)=>i*0.9)
-            return outer+','+ arcGenerator.centroid(d)
-        })
     }
     const svg_width = width;
     const svg_height = height;
@@ -344,8 +256,6 @@ function ready_TW(deaths){
     const YearsData = chooseData("2010",deaths);
     console.log(YearsData);
     setupCanvas_TW(YearsData,TW_deathsClean,700,600);
-    // setupCanvas_TW_circle(YearsData,TW_deathsClean);
-    
 }
 
 
