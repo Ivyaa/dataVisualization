@@ -7777,6 +7777,7 @@ textarea.form-control-lg {
 .text-muted {
   --bs-text-opacity: 1;
   color: #6c757d !important;
+  text-align: center;
 }
 
 .text-black-50 {
@@ -11811,7 +11812,7 @@ section#contact form#contactForm :-ms-input-placeholder {
 
 h3, h4{
   font-size: 0.9rem;
-  text-align:left;
+  text-align:center;
   color: #555;
   margin: 0;
   
