@@ -11787,6 +11787,13 @@ section#contact form#contactForm :-ms-input-placeholder {
 .axis .domain{
   stroke : none;
 }
+
+.axis.tickline{
+  stroke:#bbb;
+  stroke-width:0.5;
+  stroke-dasharray:4,2;
+}
+
 .x line{
   stroke: rgb(255, 255, 255);
 }
