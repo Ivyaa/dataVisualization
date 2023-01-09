@@ -586,7 +586,7 @@ function drawChart3(){
 
         // 設定要給 Y 軸用的 scale 跟 axis
         const yScale = d3.scaleLinear()
-                        .domain([0, 5000000])
+                        .domain([0, 300000])
                         //.domain(d3.extent(yData))
                         .range([ rwdSvgHeight - margin,margin]) // 數值要顛倒，才會從低往高排
                         .nice()
@@ -621,7 +621,7 @@ function drawChart3(){
                                         (d[1]) // 只取資料的部分帶入
                         })
         // 建立浮動的資料標籤
-        const nameTag = d3.select('#chart222')
+        const nameTag = d3.select('#chart333')
                 .append('div')
                 .attr('class', 'nameTag')
                 .style('position', 'absolute')
