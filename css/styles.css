@@ -11855,3 +11855,9 @@ button:hover{
 button:focus{
   background:#faa72a;
 }
+
+.chart{
+  width: 100%;
+  min-width: 300px;
+  margin: auto;
+}
